@@ -6,9 +6,14 @@
 		
 		<title>Yelpcamp</title>
 	    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css"> -->
+
 		<link rel="stylesheet" href="/stylesheets/main.css">
-		
-		<nav class="navbar navbar-default">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	
+		<nav class="navbar navbar-inverse">
 			<div class="container">
 				<div class="navbar-header">	
 					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -22,16 +27,22 @@
 				
 				<div class="collapse navbar-collapse" id="navbar">
 					<ul class="nav navbar-nav">
-						 <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %> "><a href="/campgrounds">Home</a></li>
+						 <li class="<%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %> "><a href="/campgrounds"><i class="fa fa-home" aria-hidden="true"></i> Home</a></li>
           </ul>
+					
+					<ul class="nav navbar-nav">
+						 <li class="<%= typeof page !== 'undefined' && page === 'about' ? 'active' : '' %> "><a href="/about"><i class="fa fa-info" aria-hidden="true"></i> About</a></li>
+          </ul>
+					
+					
           <ul class="nav navbar-nav navbar-right">
               <% if(!currentUser){ %>
-                  <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login" >Login</a>					  </li>
-                  <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register">Sign Up</a> 
+                  <li class="<%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"><a href="/login" ><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Login</a>					  </li>
+                  <li class="<%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"><a href="/register"><i class="fas fa-user-plus"></i> Sign Up</a> 
 			  	  </li>
               <% } else { %>
                   <li><a href="#" >Signed In As <%= currentUser.username %></a></li>
-                  <li><a href="/logout">Logout</a></li>
+			  <li><a href="/logout"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Logout</a></li>
               <% } %>
           </ul>
         </div>

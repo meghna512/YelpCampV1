@@ -4,6 +4,8 @@ var CampgroundSchema = new mongoose.Schema({
 	name: String,
 	image: String,
 	price: Number,
+	location: String,
+	bookingwindow: String,
 	createdAt: {type: Date, default: Date.now },
 	description: String,
 	author: {
@@ -17,6 +19,12 @@ var CampgroundSchema = new mongoose.Schema({
 		{
 			type: mongoose.Schema.Types.ObjectId,
 			ref: "Comment"
+		}
+	],
+	likes: [
+		{
+			type: mongoose.Schema.Types.ObjectId,
+			ref: "User"
 		}
 	]
 })

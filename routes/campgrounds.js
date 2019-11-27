@@ -5,6 +5,7 @@ var middleware =require("../middleware");
 
 
 router.get("/campgrounds", function(req,res){
+	// search
 	if(req.query.search){
 		var noMatch= null;
 		var search= new RegExp(escapeRegex(req.query.search), 'gi');
@@ -14,19 +15,23 @@ router.get("/campgrounds", function(req,res){
 		}else{
 			if(allCampground.length < 1){
 				noMatch= "No such campground found, please try again!";		
-			 }
-			res.render("campgrounds/index.ejs", {campgrounds: allCampground, currentUser: req.user, page:'campgrounds', noMatch: noMatch});
+			}
+			res.render("campgrounds/index.ejs", {campgrounds: allCampground, currentUser: req.user, noMatch:noMatch, page:'campgrounds'});
 		}
 	})
-		}
+	} else{
+	// })
+		
+		
 	Campground.find({}, function(err, allCampground){
 		if(err){
 			req.flash("error", "Something went wrong!");
 			res.redirect("back")
 		}else{
-			res.render("campgrounds/index.ejs", {campgrounds: allCampground, currentUser: req.user, page:'campgrounds', noMatch: noMatch});
+			res.render("campgrounds/index.ejs", {campgrounds: allCampground, currentUser: req.user, noMatch:noMatch, page:'campgrounds'});
 		}
 	})
+	}
 	
 });
 
@@ -39,12 +44,14 @@ router.post("/campgrounds", middleware.isLoggedin, function(req, res){
 	var image = req.body.image;
 	var desc= req.body.description;
 	var price= req.body.price;
+	var location= req.body.location;
+	var bookingwindow= req.body.bookingwindow;
 		
 	var author= {
 		id: req.user._id,
 		username: req.user.username
 	}
-	var newCampground = {name:name, image: image, price: price, description: desc, author: author};
+	var newCampground = {name:name, image: image, price: price, description: desc, location: location, bookingwindow:bookingwindow,  author: author};
 	Campground.create(newCampground, function(err, newlyCreated){
 		if(err){
 			req.flash("error", "Something went wrong!");
@@ -56,9 +63,9 @@ router.post("/campgrounds", middleware.isLoggedin, function(req, res){
 	
 })
 
-
+// show campground
 router.get("/campgrounds/:id", function(req, res){
-	Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+	Campground.findById(req.params.id).populate("comments likes").exec(function(err, foundCampground){
 		if(err){
 			req.flash("error", "Something went wrong!");
 			res.redirect("/campgrounds");
@@ -67,6 +74,27 @@ router.get("/campgrounds/:id", function(req, res){
 		}
 	})
 })
+
+
+// like post route
+router.post("/campgrounds/:id/like", middleware.isLoggedin, function(req, res){
+	Campground.findById(req.params.id, function(err, campground){
+		if(err){
+			console.log(err);
+            return res.redirect("/campgrounds");
+			}
+			var foundUserLike = campground.likes.some(function (like) {
+            return like.equals(req.user._id);
+       	 });
+		if(foundUserLike){
+			campground.likes.pull(req.user._id); //pulls out the user's id from likes array
+		} else{
+			campground.likes.push(req.user); //look later
+		}
+		campground.save();
+		return res.redirect("/campgrounds/" + campground._id);
+	})
+});
 
 
 router.get("/campgrounds/:id/edit", middleware.campgroundOwnership , function(req, res){

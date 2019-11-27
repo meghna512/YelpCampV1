@@ -1,17 +1,159 @@
+ body{
+background: #bdc3c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+} 
 .thumbnail img {
 	width : 100%;
+
+}
+
+
+.login-box h1{
+	color: #5e6369;
+	font-size: 40px;
+}
+.textbox{
+	width: 100%;
+	overflow: hidden;
+	font-size: 20px;
+	padding: 8px 0;
+	margin: 8px 0;
+	border-bottom: 1px solid #5e6369;
+}
+.textbox input{
+	border: none;
+	outline: none;
+	background:none;
+	color: white;
+	font-size: 18 px;
+	width: 80px;
+	float: left;
+	
 }
 
 .thumbnail {
 	padding: 0;
 
 }
+.my-wrapper{
+	background-color: #202020;
+}
+
+.my-wrapper:hover img{
+	opacity: 0.1;
+}
+
 
 .delete-form{
 	display: inline;
 }
-.jumbotron{
+
+/* styling for jumbotron on index page */
+.jumbotron{ 
 	text-align:center;
 }
+html,
+body,
+header,
+#intro {
+    height: 100%;
+}
 
+#intro {
+    background: url("https://images.unsplash.com/photo-1523642595781-e7ce9855e4f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+/* .jumbotron {
+	background-color: #90979e;
+  /* background-image: url("https://images.unsplash.com/photo-1525747489694-0e01dd364620?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80");
+  background-size: cover; */
+} */
+
+.main-section {
+	margin: 0 auto;
+	margin-top: 130px;
+	padding: 0;
+	
+}
+ .modal-content {
+	background-color: white;
+	opacity: .9;
+	padding: 0 2px;
+	
+}
+.modal-dialog{
+	width:1000px;
+}
+
+.form-group {
+	margin-bottom: 25px;
+}
+
+
+
+
+/* ABOUT SECTION
+-------------------------------------------------- */
+	
+	.slider-size {
+  height: 400px; 
+}
+	.carousel-control.right, .carousel-control.left {
+		background-color: none;
+  color: #2f040c;
+}
+
+.logo {
+	 color: #150505a3;
+  font-size: 200px;
+}
+@media screen and (max-width: 768px) {
+  .col-sm-4 {
+    text-align: center;
+    margin: 25px 0;
+  }
+}
+	
+	.logo-small {
+  
+  font-size: 50px;
+}
+
+
+	
+.container-fluid {
+  padding: 60px 50px;
+}
+	
+
+
+	.first-section{
+		background-color: rgba(255, 0, 14, 0.21);
+	}
+	.second-section{
+			background-color: blanchedalmond;
+	}
+	.third-section{
+		background-color: rgba(77, 185, 99, 0.25); 
+	}
+	.fourth-section{
+		background-color: aliceblue;
+	}
+	
+	.footer-bg{
+		background-color: black;
+	}
+	.link-color{
+		color: #419ac5;
+	}
+	.text-color{
+		color: aliceblue;
+	}
+	

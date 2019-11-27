@@ -1,8 +1,8 @@
 <% include ../partials/header.ejs %>
 
-	<header class = "jumbotron">
+	<header class = "jumbotron" id="intro">
 		<div class="container" >
-			<h1> Welcome to YelpCamp!</h1>
+			<h1><span class="glyphicon glyphicon-tent"></span>Welcome to YelpCamp!</h1>
 			<p>View our hand picked campgrounds</p>
 			<p>	<a class="btn btn-lg btn-primary" href= "/campgrounds/new">Add a new Campground</a></p>
 			<p>
@@ -14,20 +14,29 @@
 				</form>
 			</p>
 		</div>
-	</header>
+</header>
+
+		
 
 	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
-		 <% if(noMatch!== null){ %>
-			<h3 style= "text-align:center; color:red"><%=noMatch %></h3>
-		<% } %> 
-
+		
+			<% if(noMatch !== null){%>
+		<h3 style="color: red;" align="center"> <%= noMatch %>	</h3>
+		<% } %>
+	
 		<% campgrounds.forEach(function(campground){ %>
-			<div class= "col-md-3 col-sm-6">
+			<div class= "col-md-3 col-sm-6 col-xs-6">
 				<div class="thumbnail">
-					<img src= "<%= campground.image %>"  style="height: 200px;
-    overflow: hidden;">
+					<div class="my-wrapper">
+						<a href="/campgrounds/<%=campground._id %>" >
+							<img src= "<%= campground.image %>"  style="height: 200px; overflow: hidden;"></a>
+					</div>
 					<div class= "caption">
 						<h4><%= campground.name %> </h4>
+						<!-- likes -->
+						 <div>
+          			 <span class="badge label-primary"><i class="fas fa-thumbs-up"></i> <%= campground.likes.length %></span>
+      					 </div>
 					</div>
 					<p>
 						<a href="/campgrounds/<%=campground._id %>" class="btn btn-primary" >More Info</a>

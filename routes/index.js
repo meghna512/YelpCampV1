@@ -3,6 +3,7 @@ var express =require("express");
 var router = express.Router();
 var passport = require("passport");
 var User = require("../models/user");
+var Campground = require("../models/campground");
 var middleware = require("../middleware");
 var nodemailer= require("nodemailer");
 var async= require("async");
@@ -18,27 +19,38 @@ router.get("/register", function(req, res){
 	res.render("register.ejs", {page: 'register'})
 })
 
-const { check, validationResult } = require('express-validator');
-router.post('/finished', function (req, res) {
-let email = req.body.email;
 
-check('email', 'Email required').isEmail();
-
-var errors = validationResult(req)
-if (errors) { console.log("error occured");
-  // req.session.errors = errors
-  // req.session.success = false
-  // res.redirect('/email-adress')
-  } else {
-  // req.session.success = true
-  // res.redirect('/finished')
-	  console.log("yippieeee no error occured");
-  }
+router.get("/about", function(req, res){
+	res.render("about.ejs", {page: 'about'});
 })
 
 
+
+
+// router.post("/register", function(req, res){
+// 	User.register(new User({username: req.body.username }), req.body.password, req.body.email, function(err, user){
+// 		if(err){
+// 			req.flash("error", err.message);
+// 			return res.redirect("/register");
+// 		}
+		
+// 		passport.authenticate("local")(req, res, function(){
+// 			req.flash("success", "Welcome to Yelpcamp "+ user.username+"! Nice to meet you!");
+// 			res.redirect("/campgrounds");
+// 		})
+// 	})
+// })
+
+
 router.post("/register", function(req, res){
-	User.register(new User({username: req.body.username }), req.body.password, req.body.email, function(err, user){
+	 var newUser = new User({
+        username: req.body.username,
+        // firstName: req.body.firstName,
+        // lastName: req.body.lastName,
+        email: req.body.email
+        // avatar: req.body.avatar
+      })
+	User.register(newUser, req.body.password, function(err, user){
 		if(err){
 			req.flash("error", err.message);
 			return res.redirect("/register");
@@ -113,8 +125,6 @@ router.post("/forgot", function(req, res){
 				
 			};
 			smtpTransport.sendMail(mailOptions, function(err){
-				console.log("mail sent");
-				console.log(process.env.GMAILPW)
 				req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
 				done(err, "done");
 			})

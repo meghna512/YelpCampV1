@@ -11,8 +11,6 @@ var express=	 	require("express"),
 	passport= 		require("passport"),
 	LocalStrategy=	require("passport-local"),
 	passportLocalMongoose= require("passport-local-mongoose"),
-	expressValidator = require("express-validator"),
-	validator = require("express-validator"),
 	seedDB = 		require("./seed.js");
 
 var campgroundRoutes 	= require("./routes/campgrounds"),
@@ -20,13 +18,15 @@ var campgroundRoutes 	= require("./routes/campgrounds"),
 	indexRoutes 		= require("./routes/index");
 
 
-//mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false});
-//console.log(process.env.DATABASEURL);
+//mongoose.connect("mongodb://localhost:27017/yelp_camp", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex: true});
+
+
 
 mongoose.connect(process.env.DATABASEURL,
 				{ useNewUrlParser: true,
 				useCreateIndex: true,
-				 useUnifiedTopology: true
+				 useUnifiedTopology: true,
+				 useCreateIndex: true
 				}).then( () =>{ console.log('connected to DB');
 	
 }).catch(err =>{
@@ -36,7 +36,7 @@ mongoose.connect(process.env.DATABASEURL,
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname+"/public"));
 app.use(methodOverride("_method")); //tells express to look for _method
-app.use(expressValidator);
+
 
 app.use(flash());
 app.use(require("express-session")({
@@ -44,7 +44,7 @@ app.use(require("express-session")({
 		resave: false,
 		saveUninitialized: false
 		}));
-app.locals.moment= require("moment");
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -56,7 +56,7 @@ app.use(function(req , res, next){
 	res.locals.success= req.flash("success");
 	next();
 })
-
+app.locals.moment= require("moment");
 app.use(campgroundRoutes);
 app.use(commentRoutes);
 app.use(indexRoutes);
